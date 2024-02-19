@@ -14,11 +14,19 @@ Here we will have a look at each type and try to understand how variable declara
 
 When a variable is declared by a programmer using their language of choice (compiled languages), it's type, scope and location are very well known within that source code, but what happens with the variable when the source code is compiled is not always certain.
 
-Some variables can be optimised, some might be left out of the program because they are never used at execution. How does the compiler know what to do with each value?
+Some variables can be optimised, some might be left out of the program because they are never used during execution. How does the compiler know what to do with each value?
 
 ## Sections
 
 The main sections reserved for variable declarations are `.data`, `.rodata`, and `.bss`.
+
+Some assemblers allow programmers to specify custom sections, but for the sake of simplicity, we will use the most common sections available in all assemblers.
+
+These sections hold data who's memory allocation persists for the entirety of the program's execution. Not all sections consist of canstant variables, but all sections declare variables of a specific size which may not be changed.
+
+Lastly, variables declared in these sections can be accessed at any point of the program execution which might make you think they are in a global scope.
+
+Technically yes, but in low level programming, the idea of global scope does not exist. It is at the programmer's or compiler's discretion to use each variable in a "global scope" or not.
 
 Lets start from the back
 
