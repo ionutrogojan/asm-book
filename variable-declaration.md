@@ -6,7 +6,7 @@ The most basic variable types we can declare and use in most programming languag
 - floats
 - strings
 
-Technically speaking, strings are not a basic variable type. That would be a `char`. Nonetheless, strings are more common than `char`s are, so we will use them as an example.
+Technically speaking, strings are not a basic variable type. That would be a `char`. Nonetheless, the use of strings is more common than `char`s, so we will use them as an example.
 
 Here we will have a look at each type and try to understand how variable declaration works in assembly
 
@@ -22,7 +22,7 @@ The main sections reserved for variable declarations are `.data`, `.rodata`, and
 
 Some assemblers allow programmers to specify custom sections, but for the sake of simplicity, we will use the most common sections available in all assemblers.
 
-These sections hold data who's memory allocation persists for the entirety of the program's execution. Not all sections consist of canstant variables, but all sections declare variables of a specific size which may not be changed.
+These sections hold data who's memory allocation persists for the entirety of the program's execution. Not all sections consist of constant variables, but all sections declare variables of a specific size which may not be changed.
 
 Lastly, variables declared in these sections can be accessed at any point of the program execution which might make you think they are in a global scope.
 
@@ -34,7 +34,7 @@ Lets start from the back
 
 ```asm
 section .bss
-    var resb 4    ; reserve 32-bit value (4 bytes) of uninitialised memory
+    var    resb 4    ; reserve 32-bit value (4 bytes) of uninitialised memory
 
 section .text
 global _start
@@ -47,7 +47,7 @@ Variables stored in the `.bss` section are unitialised. Well, they are, but thei
 
 This acts like declaring an integer that will at some point in the program, update it's value.
 
-The above example ilustrates this perfectly. We declare a varaible which is 4 bytes long or 32 bits and at some point in the instruction list, we update the value of `var` from 0, to 10.
+The above example illustrates this perfectly. We declare a variable which is 4 bytes long or 32 bits and at some point in the instruction list, we update the value of `var` from 0, to 10.
 
 Variables declared in the `.bss` section are mutable and have a life time equal to that of the program. In other words, the memory allocated is no freed until the process exits.
 
@@ -60,7 +60,7 @@ section .rodata
 
 Some variables need to hold a constant value throughout the lifetime of the program, which is what the `.rodata` section is used for.
 
-This variables are known at compile time and should not be modified. Modifying a variable declared in this section can result in runtime errors and undefined behaviour.
+These variables are known at compile time and should not be modified. Modifying a variable declared in this section can result in runtime errors and undefined behaviour.
 
 ### .data
 
@@ -95,8 +95,31 @@ _start:
 
 Immediate values are usually used for:
 
-- a constant value used in aritmethic or logical operations
+- a constant value used in arithmetic or logical operations
 - specifying offsets or addresses for memory operations
 - defining constants or literals within the code
 
 Assigning immediate values should be done to appropriate registers, otherwise the program can encounter runtime errors and undefined behaviours.
+
+## The Stack
+
+## The Heap
+
+## Examples
+
+Now that we know where the variables can be stored, let's look at a few examples of how to declare some of the types mentioned in the beginning.
+
+### Integers
+
+As you might already know, integers are whole numbers that can be positive, negative or zero.
+
+In high level programming languages, the difference between signed and unsigned is very clear, where as low level programming offers a little more ambiguity and the choice of signed or unsigned is solely based on how a variable may be used throughout the program's execution.
+
+Both signed an unsigned integer types follow a specific, multiple of 8 size, meaning that once a value exceeds 8 bits, it should be declared as 16 bits and so on.
+
+When it comes to `signed` integers, the left most bit is typically reserved as the sign bit, with 0 representing positive numbers, and 1 representing negative numbers.
+
+- 8-bit: -128 -> 127
+- 16-bit: -32768 -> 32767
+- 32-bit: -2147483648 -> 2147483647
+- 64-bit: -9223372036854775808 -> 9223372036854775807
